@@ -25,7 +25,7 @@ function Home() {
   }, [])
 
   if(loading) {
-    return <div>Carregando...</div>
+    return <div className='loading'><h2>Carregando...</h2></div>
   } 
 
     return (
