@@ -17,6 +17,15 @@ function Favorites() {
         localStorage.setItem('@primeflix', JSON.stringify(next))
     }
 
+    if (movies.length === 0) {
+        return (
+            <div className="my-movies">
+                <h1>Meus Filmes</h1>
+                <p>Você não tem nenhum filme favorito ainda.</p>
+            </div>
+        )
+    }
+
     return (
         <div className="my-movies">
             <h1>Meus Filmes</h1>

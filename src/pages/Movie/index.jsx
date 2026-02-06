@@ -2,14 +2,17 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import api from "../../services/api"
-
+import { toast } from 'react-toastify'
 import './Movie.css'
+
 
 function Movie() {
   const { id } = useParams()
   const [movie, setMovie] = useState(null)
   const [loading, setLoading] = useState(true)
 
+
+  
   const navigation = useNavigate()
 
   useEffect(() => {
@@ -25,7 +28,7 @@ function Movie() {
         setLoading(false)
       })
       .catch(error => {
-        console.log(error)
+        toast.error('Erro ao carregar detalhes do filme: ' + error.message)
         navigation('/', { replace: true })
         setLoading(false)
       })
@@ -40,18 +43,17 @@ function Movie() {
   }, [id, navigation])
 
   function SaveMovie() {
-    console.log('Salvar filme')
     const myMovies = localStorage.getItem('@primeflix')
     let moviesSaved = JSON.parse(myMovies) || []
     
     const hasMovie = moviesSaved.some((movieSaved) => movieSaved.id === movie.id)
     if(hasMovie) {
-      alert('Este filme já está na sua lista!')
+      toast.warning('Este filme já está na sua lista!')
       return
     }
     moviesSaved.push(movie)
     localStorage.setItem('@primeflix', JSON.stringify(moviesSaved))
-    alert('Filme salvo com sucesso!')
+    toast.success('Filme salvo com sucesso!')
   }
 
   if(loading) {
